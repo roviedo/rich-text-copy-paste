@@ -8,9 +8,13 @@ function App() {
   const [showRichText, handleShowRichText] = useState(false);
 
   const handlePaste = (e) => {
-    var clipboardData, pastedData;
+    let clipboardData, pastedData;
+    let dataType = 'text/plain';
     clipboardData = e.clipboardData || window.clipboardData;
-    pastedData = clipboardData.getData('text/html');
+    if (clipboardData.types && clipboardData.types.includes('text/html')) {
+      dataType = 'text/html';
+    }
+    pastedData = clipboardData.getData(dataType);
     handleChange(e.target.value);
     handleRichText(pastedData);
     handleShowRichText(false);
@@ -24,13 +28,16 @@ function App() {
   return (
     <div className="App">
       <div className="textarea-button-container">
+        <h1>Handle Rich Text copy/pasting</h1>
         <textarea
           type="text"
           onPaste={handlePaste}
           onChange={handleOnChange}
         />
         <button type="submit" onClick={handleSubmit} >Submit</button>
-        { showRichText ? <div dangerouslySetInnerHTML={{__html: richText}} className="rich-text" /> : null }
+        { showRichText ?
+          (richText ? <div dangerouslySetInnerHTML={{__html: richText}} className="rich-text" /> : textInput)
+        : null }
       </div>
     </div>
   );
