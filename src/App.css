@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  justify-content: center;
+  display: flex;
 }
 
 .App-logo {
@@ -35,4 +37,16 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.textarea-button-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  align-items: center;
+}
+
+.textarea-button-container textarea {
+  height: 500px;
+  width: 100%;
 }
